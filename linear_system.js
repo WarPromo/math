@@ -3,6 +3,8 @@ Example System:
 0x + 2y + 3z = 4
 1x + 0y + 3z = 0
 1x + 0y + 0z = 4
+
+Returns invalid if system has infinite solutions, or has no solution
 */
 let mySystem = [
   [0,2,3,4],
