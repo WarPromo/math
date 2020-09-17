@@ -28,9 +28,7 @@ function solveSystem(system){
     if(system[row][row]==0){
       for(var swaps=0; swaps<system.length; swaps++){
         if(system[swaps][row]!=0){
-          let match = system[swaps].slice();
-          system[swaps]=system[row]
-          system[row]=match;
+          [system[swaps], system[row]] = [system[row], system[swaps]]
         }
       }
     }
