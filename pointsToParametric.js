@@ -32,13 +32,13 @@ function eqToString(equation){
   for(var a=0; a<equation.length; a++) string += `+${equation[a]}*x**${a}`;
   return string;
 }
-
+/*
 function derivative(equation){
   let derivative = [];
   for(var a=1; a<equation.length; a++) derivative.push(equation[a]*a)
   return derivative;
 }
-
+*/
 function generatePoints(positions){
   let ticksvsx = [];
   let ticksvsy = [];
