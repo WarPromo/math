@@ -16,17 +16,6 @@ let ymovement = solveSystem(generateSystem(genPoints[1]));
 console.log(eqToString(xmovement));
 console.log(eqToString(ymovement));
 
-function generateSystems(movements){
-  let systems = [];
-  for(var a=0; a+3<=movements.length; a++){
-    let points = [];
-    for(var b=a; b-a<3; b++) points.push([movements[b][0], movements[b][1]])
-    systems.push(solveSystem(generateSystem(points)));
-  }
-  return systems;
-}
-
-
 function eqToString(equation){
   let string = "";
   for(var a=0; a<equation.length; a++) string += `+${equation[a]}*x**${a}`;
