@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Threading;
+
+namespace WindowsFormsApp13
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            this.Width = 1000;
+            this.Height = 1000;
+        }
+
+        void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.Clear(Color.Black);
+            Pen pen = new Pen(Color.White);
+            Pen grid = new Pen(Color.Red);
+            Brush brush = new SolidBrush(Color.Red);
+
+            pen.Width = 2;
+
+            //Line resolution
+            float precision = 0.2f;
+            //Point of origin relative to screen
+            float offsetX = 200;
+            float offsetY = 500;
+            //Zoom amount
+            float zoom = 100;
+            //Animation
+            int animation = 10;
+            float startT = -20;
+            float endT = 20;
+            //X axis
+            float incrementX = 1f;
+            float incrementY = 1f;
+
+            float x(float t)
+            {
+                return (float) t;
+            }
+
+            float y(float t)
+            {
+                return (float) Math.Pow(t,2);
+            }
+
+            //Call line function
+            g.Clear(Color.Black);
+            drawLine(x, y, startT, endT, offsetX, offsetY, zoom, animation, precision, incrementX, incrementY, pen, grid, brush);
+
+            void drawLine(Func<float, float> xt, Func<float, float> yt, float start, float end, float oX, float oY, float z, int a, float p, float ix, float iy, Pen lc, Pen gc, Brush b)
+            {
+                //Draw line
+                for (float t = start; t <= end; t += p)
+                {
+                    g.DrawLine(lc, xt(t) * z + oX, this.Height - (yt(t) * z + oY), xt(t + p) * z + oX, this.Height - (yt(t + p) * z + oY));
+                }
+
+                //Draw y axis
+                g.DrawLine(lc, oX, 0, oX, this.Height);
+                for (float t = -(this.Height) * z * iy; t <= this.Height; t += z * iy)
+                {
+                    g.DrawLine(gc, oX - 10, this.Height - (oY + t), oX + 10, this.Height - (oY + t));
+                    g.DrawString(t / z + "", this.Font, b, oX - 20, this.Height - (oY + t));
+                }
+
+                //Draw x axis
+                g.DrawLine(lc, 0, this.Height - (oY), this.Width, this.Height - (oY));
+                for (float t = -(this.Height) * z * iy; t <= this.Width - oX; t += z * ix)
+                {
+                    g.DrawLine(gc, oX + t, this.Height - (oY + 10), oX + t, this.Height - (oY - 10));
+                    g.DrawString(t / z + "", this.Font, b, oX + t, this.Height - (oY + 20));
+                }
+            }
+        }
+    }
+}
